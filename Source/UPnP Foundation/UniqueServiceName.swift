@@ -100,13 +100,10 @@ extension UniqueServiceName {
 }
 
 extension UniqueServiceName {
-    override open var hashValue: Int {
-        return rawValue.hashValue
-    }
-    
+
     /// Because self is rooted to NSObject, for now, usage as a key in a dictionary will be treated as a key within an NSDictionary; which requires the overriding the methods hash and isEqual, see Github issue #16
     override open var hash: Int {
-        return hashValue
+         return rawValue.hashValue
     }
     
     /// Because self is rooted to NSObject, for now, usage as a key in a dictionary will be treated as a key within an NSDictionary; which requires the overriding the methods hash and isEqual, see Github issue #16

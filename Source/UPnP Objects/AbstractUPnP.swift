@@ -54,13 +54,10 @@ public func ==(lhs: AbstractUPnP, rhs: AbstractUPnP) -> Bool {
 }
 
 @objc extension AbstractUPnP {
-    override open var hashValue: Int {
-        return usn.hashValue
-    }
     
     /// Because self is rooted to NSObject, for now, usage as a key in a dictionary will be treated as a key within an NSDictionary; which requires the overriding the methods hash and isEqual, see Github issue #16
     override open var hash: Int {
-        return hashValue
+        return usn.hashValue
     }
     
     /// Because self is rooted to NSObject, for now, usage as a key in a dictionary will be treated as a key within an NSDictionary; which requires the overriding the methods hash and isEqual, see Github issue #16
