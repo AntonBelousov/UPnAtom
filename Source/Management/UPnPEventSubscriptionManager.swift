@@ -118,6 +118,11 @@ class UPnPEventSubscriptionManager {
         #if os(iOS)
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        // NOTE: Change above to get to compile as project, but keep code as-is for using as sub-project (pod)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidEnterBackground(_:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+
         #endif
         
         /// GCDWebServer must be initialized on the main thread. In order to guarantee this, it's initialization is dispatched on the main queue. To prevent critical sections from accessing it before it is initialized, the dispatch is synchronized within a dispatch barrier to the subscription manager's critical section queue.
@@ -127,7 +132,7 @@ class UPnPEventSubscriptionManager {
                 
                 GCDWebServer.setLogLevel(Int32(3))
                 
-                self._httpServer.addHandler(forMethod: "NOTIFY", path: self._eventCallBackPath, request: GCDWebServerDataRequest.self) { (request: GCDWebServerRequest!) -> GCDWebServerResponse! in
+                self._httpServer.addHandler(forMethod: "NOTIFY", path: self._eventCallBackPath, request: GCDWebServerDataRequest.self) { (request: GCDWebServerRequest!) -> GCDWebServerResponse? in
 
                     if let dataRequest = request as? GCDWebServerDataRequest,
                         let headers = dataRequest.headers as? [String: AnyObject],
@@ -501,7 +506,7 @@ extension AFHTTPSessionManager {
     fileprivate func dataTask(_ method: String, URLString: String, parameters: AnyObject, success: ((_ task: URLSessionDataTask, _ responseObject: AnyObject?) -> Void)?, failure: ((_ task: URLSessionDataTask?, _ error: NSError) -> Void)?) -> URLSessionDataTask? {
         let request: URLRequest!
         var serializationError: NSError?
-        request = self.requestSerializer.request(withMethod: method, urlString: URL(string: URLString, relativeTo: self.baseURL)!.absoluteString, parameters: parameters, error: &serializationError) as URLRequest!
+        request = self.requestSerializer.request(withMethod: method, urlString: URL(string: URLString, relativeTo: self.baseURL)!.absoluteString, parameters: parameters, error: &serializationError) as URLRequest?
         
         if let serializationError = serializationError {
             if let failure = failure {

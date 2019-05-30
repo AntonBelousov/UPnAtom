@@ -154,7 +154,7 @@ class RootFolderViewController: UIViewController {
     }
     
     fileprivate func deleteDevice(deviceUSN: UniqueServiceName, deviceUSNs: inout [UniqueServiceName], inSection section: Int) {
-        if let index = deviceUSNs.index(of: deviceUSN) {
+        if let index = deviceUSNs.firstIndex(of: deviceUSN) {
             deviceUSNs.remove(at: index)
             let indexPath = IndexPath(row: index, section: section)
             self._tableView.deleteRows(at: [indexPath], with: .automatic)

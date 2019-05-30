@@ -166,7 +166,7 @@ class SSDPExplorer {
             /// NT = Notification Type - SSDP discovered from device advertisements
             /// ST = Search Target - SSDP discovered as a result of using M-SEARCH requests
             let ssdpTypeRawValue = (headers["st"] != nil ? headers["st"] : headers["nt"]),
-            let ssdpType = SSDPType(rawValue: ssdpTypeRawValue), _types.index(of: ssdpType) != nil {
+            let ssdpType = SSDPType(rawValue: ssdpTypeRawValue), _types.firstIndex(of: ssdpType) != nil {
                 LogVerbose("SSDP response headers: \(headers)")
                 let discovery = SSDPDiscovery(usn: usn, descriptionURL: locationURL, type: ssdpType)
                 switch messageType {
