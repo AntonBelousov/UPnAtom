@@ -127,7 +127,7 @@ class UPnPEventSubscriptionManager {
                 
                 GCDWebServer.setLogLevel(Int32(3))
                 
-                self._httpServer.addHandler(forMethod: "NOTIFY", path: self._eventCallBackPath, request: GCDWebServerDataRequest.self) { (request: GCDWebServerRequest!) -> GCDWebServerResponse! in
+                self._httpServer.addHandler(forMethod: "NOTIFY", path: self._eventCallBackPath, request: GCDWebServerDataRequest.self) { (request: GCDWebServerRequest!) -> GCDWebServerResponse? in
 
                     if let dataRequest = request as? GCDWebServerDataRequest,
                         let headers = dataRequest.headers as? [String: AnyObject],
@@ -501,7 +501,7 @@ extension AFHTTPSessionManager {
     fileprivate func dataTask(_ method: String, URLString: String, parameters: AnyObject, success: ((_ task: URLSessionDataTask, _ responseObject: AnyObject?) -> Void)?, failure: ((_ task: URLSessionDataTask?, _ error: NSError) -> Void)?) -> URLSessionDataTask? {
         let request: URLRequest!
         var serializationError: NSError?
-        request = self.requestSerializer.request(withMethod: method, urlString: URL(string: URLString, relativeTo: self.baseURL)!.absoluteString, parameters: parameters, error: &serializationError) as URLRequest!
+        request = self.requestSerializer.request(withMethod: method, urlString: URL(string: URLString, relativeTo: self.baseURL)!.absoluteString, parameters: parameters, error: &serializationError) as URLRequest?
         
         if let serializationError = serializationError {
             if let failure = failure {

@@ -217,7 +217,7 @@ extension UPnPRegistry: SSDPDiscoveryAdapterDelegate {
             self._concurrentUPnPObjectQueue.async(flags: .barrier, execute: { () -> Void in
                 if let xmlData = responseObject as? Data {
                     // if ssdp object is not in cache then discard
-                    guard self._ssdpDiscoveryCache.index(of: ssdpDiscovery) != nil else {
+                    guard self._ssdpDiscoveryCache.firstIndex(of: ssdpDiscovery) != nil else {
                         return
                     }
                     
